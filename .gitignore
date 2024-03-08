@@ -1,0 +1,7 @@
+
+/node/node_modules
+data/auto.cnf
+data/ib_buffer_pool
+data/ib_logfile0
+data/ib_logfile1
+data/ibdata1
