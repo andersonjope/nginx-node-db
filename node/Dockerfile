@@ -1,11 +1,12 @@
 FROM node:latest
 
+RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-RUN npm init -y
-RUN npm install express mariadb ejs
+COPY package*.json ./
+RUN npm install express mariadb ejs --save
 
-COPY . .
+COPY ./node_modules /usr/src/app/node_modules
 
 EXPOSE 3000
 
