@@ -6,6 +6,7 @@ services:
     build: 
       context: node
     container_name: app
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh "index.js"
     restart: always
     env_file: .env
     networks:
@@ -19,12 +20,7 @@ services:
     depends_on:
       - db
     links:
-      - db
-    healthcheck:
-      test: "curl -f tcp:3306"
-      interval: 5s
-      timeout: 5s
-      retries: 10  
+      - db  
 
   server:
     build: 
@@ -58,11 +54,6 @@ services:
       - 3306:3306
     networks:
       - jopenet
-    healthcheck:
-        test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
-        interval: 10s
-        timeout: 30s
-        retries: 3
 
   phpmyadmin:
     image: phpmyadmin:latest
