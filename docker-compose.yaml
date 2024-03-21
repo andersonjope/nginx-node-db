@@ -6,17 +6,14 @@ services:
     build: 
       context: node
     container_name: app
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh "index.js"
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s sh -c "npm install && node index.js"
     restart: always
     env_file: .env
     networks:
       - jopenet
     volumes:
       - ./node:/usr/src/app
-      - /usr/src/app/node_modules
     tty: true
-    ports:
-      - "3000:3000"
     depends_on:
       - db
     links:

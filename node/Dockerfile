@@ -1,7 +1,4 @@
-FROM node:latest
-
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+FROM node:21.7.1-slim
 
 # Dockerize is needed to sync containers startup
 ENV DOCKERIZE_VERSION v0.7.0
@@ -11,10 +8,9 @@ RUN apt-get update \
     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-COPY package*.json ./
-RUN npm install express mariadb ejs --save
+USER node
 
-COPY ./node_modules /usr/src/app/node_modules
+WORKDIR /usr/src/app
 
 EXPOSE 3000
 
